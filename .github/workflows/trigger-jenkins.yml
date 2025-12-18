@@ -15,7 +15,7 @@ jobs:
       - name: Trigger Jenkins
         env:
           JENKINS_URL: "http://3.16.66.131:18081/view/TestRailDemo/job/Demo%20Mock%20Application%20Build%20Job/build"
-          JENKINS_BASIC: ${{ secrets.JENKINS_BASIC }}  # faragliac:API_TOKEN
+          JENKINS_BASIC: ${{ secrets.JENKINS_BASIC }}  
         run: |
           set -euo pipefail
           echo "RunID=${{ github.event.inputs.run_id }}"
