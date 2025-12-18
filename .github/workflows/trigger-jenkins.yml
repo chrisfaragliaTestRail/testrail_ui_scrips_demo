@@ -2,11 +2,6 @@ name: Trigger Jenkins Job
 
 on:
   workflow_dispatch:
-    inputs:
-      run_id:
-        description: "TestRail Run ID"
-        required: false
-        default: ""
 
 jobs:
   trigger:
@@ -15,14 +10,7 @@ jobs:
       - name: Trigger Jenkins
         env:
           JENKINS_URL: "http://3.16.66.131:18081/view/TestRailDemo/job/Demo%20Mock%20Application%20Build%20Job/build"
-          JENKINS_BASIC: ${{ secrets.JENKINS_BASIC }}  
+          JENKINS_BASIC: ${{ secrets.JENKINS_BASIC }}
         run: |
-          set -euo pipefail
-          echo "RunID=${{ github.event.inputs.run_id }}"
-
-          # If Jenkins requires CSRF crumb, uncomment:
-          # CRUMB=$(curl -s -u "$JENKINS_BASIC" "http://3.16.66.131:18081/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,\":\",//crumb)")
-          # curl -sv -X POST "$JENKINS_URL" -u "$JENKINS_BASIC" -H "$CRUMB"
-          # exit 0
-
-          curl -sv -X POST "$JENKINS_URL" -u "$JENKINS_BASIC"
+          set -e
+          curl -sS -X POST "$JENKINS_URL" -u "$JENKINS_BASIC"
